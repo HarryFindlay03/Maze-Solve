@@ -3,6 +3,7 @@ Python file for depth first search on supplied mazes for ECM2423 coursework.
 """
 
 import argparse
+from termcolor import colored
 from typing import List
 
 
@@ -16,7 +17,7 @@ def print_2d_array(arr: List[str]) -> None:
     for i in range(len(arr)):
         for j in range(len(arr[0]) - 1):
             print(arr[i][j], end="")
-        print(arr[i][j])
+        print(colored(arr[i][len(arr[i])-1], 'red'))
 
 
 def convert_to_array(filename: str) -> List[str]:
@@ -48,6 +49,34 @@ def convert_to_array(filename: str) -> List[str]:
         return return_arr
 
 
+def find_gates(arr: List[str]) -> List[tuple]:
+    """
+    Returns the coordinates of the start gate and the exit gate in the maze.
+
+    Args:
+        arr (List[str]): The inputted 2D array to find the start and exit gate for.
+
+    Returns:
+        List(tuple): A list containing two tuples, the first containing the x, y coords of the entrance, 
+        and the second value containing the x, y coords of the exit.
+    """
+    res = []
+    #Find the start gate
+    for i in range(len(arr[0])):
+        if arr[0][i] == "-":
+            res.append((0, i))
+
+    #Find the exit gate
+    #Final row in the maze
+    n = len(arr) - 1
+    for j in range(len(arr[n])):
+        if arr[n][j] == "-":
+            res.append((n, j))
+
+    return res
+
+
+
 def main():
     """
     main method in dfs_solver.py that runs the code
@@ -63,6 +92,9 @@ def main():
 
     print(f"Maze: {args.filename}\n\n")
     arr = convert_to_array(args.filename)
+
+    print(find_gates(arr))
+
     print_2d_array(arr)
     print("\n\n")
 
