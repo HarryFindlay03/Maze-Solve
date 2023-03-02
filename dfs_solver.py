@@ -114,19 +114,9 @@ def print_colors(arr: List[List[str]], visited: List[tuple]):
         print(arr[i][len(arr[i]) - 1])
 
 
-def convert_array(arr: List[List[str]], visited: List[tuple]):
+def find_ordered_path(start: tuple, goal: tuple, path: set(), visited=[]):
     """
-    Takes an array and an unorderd path through the array, and replaces it with X's
-    """
-    for i in range(len(arr)):
-        for j in range(len(arr[0]) - 1):
-            if (i, j) in visited:
-                arr[i][j] = arr[i][j].replace("-", "X")
-
-
-def find_ordered_path(arr: List[List[str]], start: tuple, goal: tuple, visited=[]):
-    """
-    Takes a converted array, i.e. path replaced with X's and finds the ordered path through the array !
+    Takes a path and finds the route through the maze from start to end.
     """
     moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
@@ -141,8 +131,8 @@ def find_ordered_path(arr: List[List[str]], start: tuple, goal: tuple, visited=[
 
     for neighbour in neighbours:
         if neighbour not in visited:
-            if arr[neighbour[0]][neighbour[1]] == "X":
-                if find_ordered_path(arr, neighbour, goal, visited):
+            if neighbour in path:
+                if find_ordered_path(neighbour, goal, path, visited):
                     return visited
 
 
@@ -171,13 +161,13 @@ def main():
     print(f"Start: {start_gate} . End: {finish_gate}")
     path = dfs(arr, start_gate, finish_gate)
 
-    # Pretty maze output: Uncomment for output, note large mazes are very large.
-    convert_array(arr, path)
-    print(find_ordered_path(arr, start_gate, finish_gate))
-    print("\n\n")
+    if path:
+        print("PATH FOUND !")
+
+    # Path through the maze.
+    print(find_ordered_path(start_gate, finish_gate, path))
 
 
-# TODO: Why should I have this statement ?
 if __name__ == "__main__":
     # Timing
     start_time = time.time()
