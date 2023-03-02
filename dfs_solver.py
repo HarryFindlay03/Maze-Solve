@@ -19,7 +19,7 @@ def print_2d_array(arr: List[List[str]]) -> None:
     for i in range(len(arr)):
         for j in range(len(arr[0]) - 1):
             print(arr[i][j], end="")
-        print(arr[i][len(arr[i])-1])
+        print(arr[i][len(arr[i]) - 1])
 
 
 def convert_to_array(filename: str) -> List[List[str]]:
@@ -59,17 +59,17 @@ def find_gates(arr: List[List[str]]) -> List[tuple]:
         arr (List[str]): The inputted 2D array to find the start and exit gate for.
 
     Returns:
-        List(tuple): A list containing two tuples, the first containing the x, y coords of the entrance, 
+        List(tuple): A list containing two tuples, the first containing the x, y coords of the entrance,
         and the second value containing the x, y coords of the exit.
     """
     res = []
-    #Find the start gate
+    # Find the start gate
     for i in range(len(arr[0])):
         if arr[0][i] == "-":
             res.append((0, i))
 
-    #Find the exit gate
-    #Final row in the maze
+    # Find the exit gate
+    # Final row in the maze
     n = len(arr) - 1
     for j in range(len(arr[n])):
         if arr[n][j] == "-":
@@ -84,19 +84,17 @@ def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=set()):
 
     visited.add(start)
 
-    # print(visited)
-
     # base case
     if start == goal:
         return True
-    
+
     # leaf node
     if arr[start[0]][start[1]] != "-" or start[0] < 0:
         return False
-    
+
     neighbours = []
     for move in moves:
-        neighbours.append((start[0] + move[0], start[1] + move[1])) 
+        neighbours.append((start[0] + move[0], start[1] + move[1]))
 
     for neighbour in neighbours:
         if neighbour not in visited:
@@ -106,15 +104,46 @@ def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=set()):
                 visited.remove(neighbour)
 
 
-
 def print_colors(arr: List[List[str]], visited: List[tuple]):
     for i in range(len(arr)):
         for j in range(len(arr[0]) - 1):
             if (i, j) in visited:
-                print(colored(arr[i][j], 'red'), end="")
+                print(colored(arr[i][j], "red"), end="")
             else:
                 print(arr[i][j], end="")
-        print(arr[i][len(arr[i])-1])
+        print(arr[i][len(arr[i]) - 1])
+
+
+def convert_array(arr: List[List[str]], visited: List[tuple]):
+    """
+    Takes an array and an unorderd path through the array, and replaces it with X's
+    """
+    for i in range(len(arr)):
+        for j in range(len(arr[0]) - 1):
+            if (i, j) in visited:
+                arr[i][j] = arr[i][j].replace("-", "X")
+
+
+def find_ordered_path(arr: List[List[str]], start: tuple, goal: tuple, visited=[]):
+    """
+    Takes a converted array, i.e. path replaced with X's and finds the ordered path through the array !
+    """
+    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    visited.append(start)
+
+    if start == goal:
+        return True
+
+    neighbours = []
+    for move in moves:
+        neighbours.append((start[0] + move[0], start[1] + move[1]))
+
+    for neighbour in neighbours:
+        if neighbour not in visited:
+            if arr[neighbour[0]][neighbour[1]] == "X":
+                if find_ordered_path(arr, neighbour, goal, visited):
+                    return visited
 
 
 def main():
@@ -139,20 +168,18 @@ def main():
     gates = find_gates(arr)
     start_gate, finish_gate = gates[0], gates[1]
 
-    print(f'Start: {start_gate} . End: {finish_gate}')
+    print(f"Start: {start_gate} . End: {finish_gate}")
     path = dfs(arr, start_gate, finish_gate)
 
-    print("Found path: ", path)
-
     # Pretty maze output: Uncomment for output, note large mazes are very large.
-    print_2d_array(arr)
-    print("\n")
-    print_colors(arr, path)
+    convert_array(arr, path)
+    print(find_ordered_path(arr, start_gate, finish_gate))
     print("\n\n")
 
-#TODO: Why should I have this statement ?
+
+# TODO: Why should I have this statement ?
 if __name__ == "__main__":
-    #Timing
+    # Timing
     start_time = time.time()
     main()
     print("EXEC TIME: %s SECONDS" % (time.time() - start_time))
