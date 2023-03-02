@@ -79,8 +79,9 @@ def find_gates(arr: List[List[str]]) -> List[tuple]:
 
 
 def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=[]) -> List[tuple]:
-    # up, down, left, right
-    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    # TODO: Optimal order!
+    # down, up, right, left
+    moves = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
     visited.append(start)
 
@@ -110,7 +111,7 @@ def print_colors(arr: List[List[str]], visited: List[tuple]):
     for i in range(len(arr)):
         for j in range(len(arr[0]) - 1):
             if (i, j) in visited:
-                print(colored(arr[i][j], 'green'), end="")
+                print(colored(arr[i][j], 'red'), end="")
             else:
                 print(arr[i][j], end="")
         print(arr[i][len(arr[i])-1])
@@ -132,8 +133,9 @@ def main():
     print(f"Maze: {args.filename}\n\n")
     arr = convert_to_array(args.filename)
 
+    # TODO: sort out recursion depth!
     # Needed for changing the recursion limit for large mazes!
-    sys.setrecursionlimit(4 * len(arr))
+    sys.setrecursionlimit(100000)
 
     gates = find_gates(arr)
     start_gate, finish_gate = gates[0], gates[1]
@@ -144,10 +146,10 @@ def main():
     print("Found path: ", path)
 
     # Pretty maze output: Uncomment for output, note large mazes are very large.
-    # print_2d_array(arr)
-    # print("\n")
-    # print_colors(arr, path)
-    # print("\n\n")
+    print_2d_array(arr)
+    print("\n")
+    print_colors(arr, path)
+    print("\n\n")
 
 #TODO: Why should I have this statement ?
 if __name__ == "__main__":
