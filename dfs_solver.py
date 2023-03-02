@@ -80,7 +80,7 @@ def find_gates(arr: List[List[str]]) -> List[tuple]:
 
 def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=set()):
     # possible moves
-    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    moves = [(1, 0), (0, 1), (0, -1), (-1, 0)]
 
     visited.add(start)
 
@@ -105,10 +105,13 @@ def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=set()):
 
 
 def print_colors(arr: List[List[str]], visited: List[tuple]):
+    """
+    Method that prints a path through the maze in a colour of your choosing.
+    """
     for i in range(len(arr)):
         for j in range(len(arr[0]) - 1):
             if (i, j) in visited:
-                print(colored(arr[i][j], "red"), end="")
+                print(colored(arr[i][j], "green"), end="")
             else:
                 print(arr[i][j], end="")
         print(arr[i][len(arr[i]) - 1])
@@ -149,7 +152,7 @@ def main():
 
     args = parser.parse_args()
 
-    print(f"Maze: {args.filename}\n\n")
+    print(f"\n\nMaze: {args.filename}\n\n")
     arr = convert_to_array(args.filename)
 
     # Needed for changing the recursion limit for large mazes, this can be set to base * height!
@@ -161,11 +164,12 @@ def main():
     print(f"Start: {start_gate} . End: {finish_gate}")
     path = dfs(arr, start_gate, finish_gate)
 
-    if path:
-        print("PATH FOUND !")
-
     # Path through the maze.
-    print(find_ordered_path(start_gate, finish_gate, path))
+    ordered_path = find_ordered_path(start_gate, finish_gate, path)
+    if ordered_path is not None:
+        print("PATH FOUND🕺✨✨!")
+    else:
+        print("ERROR💤PATH NOT FOUND💤")
 
 
 if __name__ == "__main__":
