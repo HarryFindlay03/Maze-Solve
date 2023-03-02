@@ -89,7 +89,7 @@ def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=set()):
         return True
 
     # leaf node
-    if arr[start[0]][start[1]] != "-" or start[0] < 0:
+    if arr[start[0]][start[1]] == "#" or start[0] < 0:
         return False
 
     neighbours = []
