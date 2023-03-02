@@ -78,33 +78,33 @@ def find_gates(arr: List[List[str]]) -> List[tuple]:
     return res
 
 
-def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=[]) -> List[tuple]:
-    # TODO: Optimal order!
-    # down, up, right, left
-    moves = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+def dfs(arr: List[List[str]], start: tuple, goal: tuple, visited=set()):
+    # possible moves
+    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-    visited.append(start)
+    visited.add(start)
 
-    # Base case
+    # print(visited)
+
+    # base case
     if start == goal:
         return True
-
-    # Hit a leaf node !
+    
+    # leaf node
     if arr[start[0]][start[1]] != "-" or start[0] < 0:
-        visited.pop()
-        return
-
-    neighbour_poses = []
+        return False
+    
+    neighbours = []
     for move in moves:
-        neighbour_poses.append((start[0] + move[0], start[1] + move[1]))
+        neighbours.append((start[0] + move[0], start[1] + move[1])) 
 
-
-    for neighbour in neighbour_poses:
+    for neighbour in neighbours:
         if neighbour not in visited:
             if dfs(arr, neighbour, goal, visited):
                 return visited
+            else:
+                visited.remove(neighbour)
 
-    visited.pop()
 
 
 def print_colors(arr: List[List[str]], visited: List[tuple]):
@@ -133,9 +133,8 @@ def main():
     print(f"Maze: {args.filename}\n\n")
     arr = convert_to_array(args.filename)
 
-    # TODO: sort out recursion depth!
-    # Needed for changing the recursion limit for large mazes!
-    sys.setrecursionlimit(100000)
+    # Needed for changing the recursion limit for large mazes, this can be set to base * height!
+    sys.setrecursionlimit(len(arr[0]) * len(arr[1]))
 
     gates = find_gates(arr)
     start_gate, finish_gate = gates[0], gates[1]
