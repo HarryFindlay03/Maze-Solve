@@ -3,7 +3,8 @@ import sys
 import time
 
 from dfs_solver import dfs
-from mazes_utils import convert_to_array, find_gates, find_ordered_path, print_colors
+from a_star_solver import a_star
+from mazes_utils import convert_to_array, find_gates, find_ordered_path, print_colors, print_2d_array
 
 
 def main():
@@ -24,7 +25,8 @@ def main():
     arr = convert_to_array(args.filename)
 
     # Needed for changing the recursion limit for large mazes, this can be set to base * height!
-    sys.setrecursionlimit(len(arr[0]) * len(arr))
+    # sys.setrecursionlimit(len(arr[0]) * len(arr))
+    sys.setrecursionlimit(10000)
 
     gates = find_gates(arr)
     start_gate, finish_gate = gates[0], gates[1]
@@ -38,14 +40,21 @@ def main():
         ordered_path = find_ordered_path(start_gate, finish_gate, path)
         if ordered_path is not None:
             print("PATH FOUND🕺✨✨!")
+            print_colors(arr, ordered_path)
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
     elif args.algorithm == "a-star":
-        print("NOT YET IMPLEMENTED 🙃")
+        print_2d_array(arr)
+        path = a_star(arr, start_gate, finish_gate)
+
+        if path is not None:
+            print("PATH FOUND🕺✨✨!")
+        else:
+            print("ERROR💤PATH NOT FOUND💤")
 
     else:
-        print("NO ALGORITHM GIVEN !")
+        print("CHOSEN ALGORITHM IS NOT CORRECT !")
 
 
 if __name__ == "__main__":
