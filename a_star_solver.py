@@ -8,7 +8,7 @@ def manhattan_distance(start: tuple, goal: tuple) -> int:
     return abs(start[0]-goal[0]) + abs(start[1]-goal[1])
 
 
-def get_neighbours(arr: List[List[str]], node: tuple, visited: List[tuple]) -> List[tuple]:
+def get_neighbours(arr: List[List[str]], node: tuple, visited: set()) -> List[tuple]:
     moves = [(0, -1), (0, 1), (-1, 0), (1, 0)]
     neighbours = []
 
@@ -22,8 +22,12 @@ def get_neighbours(arr: List[List[str]], node: tuple, visited: List[tuple]) -> L
     return neighbours
 
 
+def reconstruct_path(arr: List[List[str]], start: tuple, goal: tuple):
+    pass
+
+
 def a_star(arr: List[List[str]], start: tuple, goal: tuple):
-    visited = []
+    visited = set()
 
     yet_to_visit = PriorityQueue()
     yet_to_visit.put((manhattan_distance(start, goal), start))
@@ -31,8 +35,7 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
     while not yet_to_visit.empty():
         # get valid neighbours of the best item in the priority queue
         curr = yet_to_visit.get()
-        print("curr: ", curr)
-        visited.append(curr[1])
+        visited.add(curr[1])
 
         if curr[1] == goal:
             return visited
@@ -45,7 +48,6 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
          
         for neighbour in neighbours:
             if neighbour not in visited:
-                # put the smallest neighbour into the queue
                 yet_to_visit.put((manhattan_distance(neighbour, goal), neighbour))
 
 
