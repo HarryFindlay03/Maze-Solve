@@ -30,10 +30,7 @@ def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List
 
     for move in moves:
         # if possible move is already in visited don't add it to valid neighbours.
-        if (
-            Node(pos=(node.pos[0] + move[0], node.pos[1] + move[1]), parent=node.parent)
-            in visited
-        ):
+        if Node(pos=(node.pos[0] + move[0], node.pos[1] + move[1]), parent=node.parent) in visited:
             continue
         if arr[node.pos[0] + move[0]][node.pos[1] + move[1]] == "-":
             neighbours.append((node.pos[0] + move[0], node.pos[1] + move[1]))
@@ -83,9 +80,4 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
             continue
 
         for neighbour in neighbours:
-            yet_to_visit.put(
-                (
-                    manhattan_distance(neighbour, goal),
-                    Node(pos=neighbour, parent=curr[1]),
-                )
-            )
+            yet_to_visit.put((manhattan_distance(neighbour, goal), Node(pos=neighbour, parent=curr[1])))
