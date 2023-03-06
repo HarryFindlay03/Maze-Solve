@@ -40,6 +40,7 @@ def main():
         ordered_path = find_ordered_path(start_gate, finish_gate, path)
         if ordered_path is not None:
             print("PATH FOUND🕺✨✨!")
+            print("PATH LENGTH: ", len(ordered_path))
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
@@ -48,6 +49,7 @@ def main():
 
         if path is not None:
             print("PATH FOUND🕺✨✨!")
+            print("PATH LENGTH: ", len(path))
         else:
             print("ERROR💤PATH NOT FOUND💤")
 

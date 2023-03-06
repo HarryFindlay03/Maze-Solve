@@ -37,7 +37,7 @@ def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List
     return neighbours
 
 
-def reconstruct_path(start: Node, goal: Node, visited: set[Node]):
+def reconstruct_path(start: Node):
     """
         Take a set of nodes and go backwards adding all the parents to a visited list,
     until start is reached, then return the reverse of this list.
@@ -48,7 +48,14 @@ def reconstruct_path(start: Node, goal: Node, visited: set[Node]):
         visited (set[Node]): The set of visited nodes.
     """
     path = []
-    path.append(start.pos)
+    curr = start
+
+    while curr.parent is not None:
+        path.append((curr.pos))
+        curr = curr.parent
+
+    path.append((curr.pos))
+    return path[::-1]
 
 
     
@@ -66,7 +73,7 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
         visited.add(curr[1])
 
         if curr[1].pos == goal:
-            return visited
+            return reconstruct_path(curr[1])
         
         neighbours = get_neighbours(arr, curr[1], visited)
 
@@ -75,8 +82,10 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
             continue
 
         for neighbour in neighbours:
-            if Node(pos=neighbour) not in visited:
+            if neighbour not in visited:
                 yet_to_visit.put((manhattan_distance(neighbour, goal), Node(pos=neighbour, parent=curr[1])))
+
+
 
 
 
