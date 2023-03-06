@@ -1,6 +1,11 @@
 from queue import PriorityQueue
 from typing import List
 
+class Node:
+    def __init__(self, row, col, parent=None) -> None:
+        self.parent = parent
+        self.pos = (row, col)
+
 def manhattan_distance(start: tuple, goal: tuple) -> int:
     """
     Manhattan distance being |x1 - x2| + |y1 - y2|
@@ -22,7 +27,11 @@ def get_neighbours(arr: List[List[str]], node: tuple, visited: set()) -> List[tu
     return neighbours
 
 
-def reconstruct_path(arr: List[List[str]], start: tuple, goal: tuple):
+def reconstruct_path(arr: List[List[str]], goal: tuple, visited: List[Node]):
+    """
+    Take a list of nodes and go backwards adding all the parents to a visited list,
+    until start is reached, then return the reverse of this list.
+    """
     pass
 
 

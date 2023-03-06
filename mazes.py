@@ -44,7 +44,6 @@ def main():
             print("ERROR💤PATH NOT FOUND💤")
 
     elif args.algorithm == "a-star":
-        print_2d_array(arr)
         path = a_star(arr, start_gate, finish_gate)
 
         if path is not None:
