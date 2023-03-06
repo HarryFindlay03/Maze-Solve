@@ -1,3 +1,4 @@
+from queue import PriorityQueue
 from typing import List
 
 def manhattan_distance(start: tuple, goal: tuple) -> int:
@@ -6,44 +7,49 @@ def manhattan_distance(start: tuple, goal: tuple) -> int:
     """
     return abs(start[0]-start[1]) + abs(goal[0]-goal[1])
 
-def a_star(arr: List[List[str]], start: tuple, goal: tuple, visited=[]) -> List[tuple] | bool | None:
-    moves = [(1, 0), (0, 1), (0, -1), (-1, 0)]
 
-    visited.append(start)
-
-    # base case
-    if start == goal:
-       return True
-
-    # leaf node
-    if arr[start[0]][start[1]] == "#" or start[0] < 0:
-        return False
-    
+def get_neighbours(arr: List[List[str]], node: tuple) -> List[tuple]:
+    moves = [(0, -1), (0, 1), (-1, 0), (1, 0)]
     neighbours = []
+
     for move in moves:
-        neighbours.append((start[0] + move[0], start[1] + move[1]))
+        if arr[node[0]+move[0]][node[1]+move[1]] == "-":
+            neighbours.append((node[0] + move[0], node[1] + move[1]))
+    
+    return neighbours
 
-    smallest = 1000000 #infty
-    smallest_loc = -1
-    for i in range(0, 4):
-        if neighbours[i] in visited:
+
+def a_star(arr: List[List[str]], start: tuple, goal: tuple):
+    visited = []
+
+    yet_to_visit = PriorityQueue()
+    yet_to_visit.put((manhattan_distance(start, goal), start))
+
+    while not yet_to_visit.empty():
+        # get valid neighbours of the best item in the priority queue
+        curr = yet_to_visit.get()
+        visited.append(curr[1])
+
+        if curr[1] == goal:
+            print("PATH: ", visited)
+            return visited
+        
+        neighbours = get_neighbours(arr, curr[1])
+
+        # if there are no valid neighbours get the next value from yet_to_visit
+        if len(neighbours) == 0:
+            visited.pop()
             continue
-        if arr[neighbours[i][0]][neighbours[i][1]] == "#":
-            continue
-
-        temp = manhattan_distance(neighbours[i], goal)
-        if temp < smallest:
-            smallest = temp
-            smallest_loc = i
-
-    if smallest_loc == -1:
-        # Keep popping until path is not on visited
-        pass
+         
+        for neighbour in neighbours:
+            if neighbour not in visited:
+                yet_to_visit.put((manhattan_distance(neighbour, goal), neighbour))
 
 
-    print(neighbours[smallest_loc])
 
-    if a_star(arr, neighbours[smallest_loc], goal, visited):
-        return visited
+
+
+
+
 
     

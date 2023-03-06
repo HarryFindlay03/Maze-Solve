@@ -50,6 +50,7 @@ def main():
 
         if path is not None:
             print("PATH FOUND🕺✨✨!")
+            print_colors(arr, path)
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
