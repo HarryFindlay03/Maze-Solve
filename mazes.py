@@ -2,9 +2,10 @@ import argparse
 import sys
 import time
 
-from dfs_solver import dfs
 from a_star_solver import a_star
-from mazes_utils import convert_to_array, find_gates, find_ordered_path, print_colors, print_2d_array
+from dfs_solver import dfs
+from mazes_utils import (convert_to_array, find_gates, find_ordered_path,
+                         print_2d_array, print_colors)
 
 
 def main():
