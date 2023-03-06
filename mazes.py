@@ -12,7 +12,7 @@ def main():
     """
     main method in dfs_solver.py that runs the code
     """
-    print("DFS MAZE SOLVER")
+    print("MAZE SOLVER")
     print("----------------")
 
     # TODO: ERROR CHECKING ON COMMAND LINE ARGUMENTS
@@ -22,7 +22,8 @@ def main():
 
     args = parser.parse_args()
 
-    print(f"\n\nMaze: {args.filename}\n\n")
+    print(f"\n\nMaze: {args.filename}")
+    print(f"Algorithm: {args.algorithm}\n\n")
     arr = convert_to_array(args.filename)
 
     # Needed for changing the recursion limit for large mazes, this can be set to base * height!
