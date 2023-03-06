@@ -5,14 +5,17 @@ def manhattan_distance(start: tuple, goal: tuple) -> int:
     """
     Manhattan distance being |x1 - x2| + |y1 - y2|
     """
-    return abs(start[0]-start[1]) + abs(goal[0]-goal[1])
+    return abs(start[0]-goal[0]) + abs(start[1]-goal[1])
 
 
-def get_neighbours(arr: List[List[str]], node: tuple) -> List[tuple]:
+def get_neighbours(arr: List[List[str]], node: tuple, visited: List[tuple]) -> List[tuple]:
     moves = [(0, -1), (0, 1), (-1, 0), (1, 0)]
     neighbours = []
 
     for move in moves:
+        # if possible move is already in visited don't add it to valid neighbours.
+        if (node[0] + move[0], node[1] + move[1]) in visited:
+            continue
         if arr[node[0]+move[0]][node[1]+move[1]] == "-":
             neighbours.append((node[0] + move[0], node[1] + move[1]))
     
@@ -28,21 +31,21 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
     while not yet_to_visit.empty():
         # get valid neighbours of the best item in the priority queue
         curr = yet_to_visit.get()
+        print("curr: ", curr)
         visited.append(curr[1])
 
         if curr[1] == goal:
-            print("PATH: ", visited)
             return visited
         
-        neighbours = get_neighbours(arr, curr[1])
+        neighbours = get_neighbours(arr, curr[1], visited)
 
         # if there are no valid neighbours get the next value from yet_to_visit
         if len(neighbours) == 0:
-            visited.pop()
             continue
          
         for neighbour in neighbours:
             if neighbour not in visited:
+                # put the smallest neighbour into the queue
                 yet_to_visit.put((manhattan_distance(neighbour, goal), neighbour))
 
 
