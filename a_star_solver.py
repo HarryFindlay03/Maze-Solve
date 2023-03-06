@@ -23,7 +23,7 @@ def manhattan_distance(start: tuple, goal: tuple) -> int:
     return abs(start[0]-goal[0]) + abs(start[1]-goal[1])
 
 
-def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List[Node]:
+def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List[tuple]:
     moves = [(0, -1), (0, 1), (-1, 0), (1, 0)]
     neighbours = []
 
@@ -32,7 +32,7 @@ def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List
         if Node(pos=(node.pos[0] + move[0], node.pos[1] + move[1])) in visited:
             continue
         if arr[node.pos[0]+move[0]][node.pos[1]+move[1]] == "-":
-            neighbours.append(Node(pos=(node.pos[0] + move[0], node.pos[1] + move[1]), parent=node))
+            neighbours.append((node.pos[0] + move[0], node.pos[1] + move[1]))
     
     return neighbours
 
@@ -75,8 +75,8 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
             continue
 
         for neighbour in neighbours:
-            if neighbour not in visited:
-                yet_to_visit.put((manhattan_distance(neighbour.pos, goal), Node(pos=neighbour.pos, parent=curr[1])))
+            if Node(pos=neighbour) not in visited:
+                yet_to_visit.put((manhattan_distance(neighbour, goal), Node(pos=neighbour, parent=curr[1])))
 
 
 
