@@ -6,14 +6,14 @@ def manhattan_distance(start: tuple, goal: tuple) -> int:
     """
     return abs(start[0]-start[1]) + abs(goal[0]-goal[1])
 
-def a_star(arr: List[List[str]], start: tuple, goal: tuple, visited=[]) -> List[tuple] | None:
+def a_star(arr: List[List[str]], start: tuple, goal: tuple, visited=[]) -> List[tuple] | bool | None:
     moves = [(1, 0), (0, 1), (0, -1), (-1, 0)]
 
     visited.append(start)
 
     # base case
     if start == goal:
-        return True
+       return True
 
     # leaf node
     if arr[start[0]][start[1]] == "#" or start[0] < 0:
@@ -37,7 +37,7 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple, visited=[]) -> List[
             smallest_loc = i
 
     if smallest_loc == -1:
-        # While visited has no valid neighbours, remove from visited.
+        # Keep popping until path is not on visited
         pass
 
 
