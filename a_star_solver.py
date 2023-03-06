@@ -38,15 +38,13 @@ def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List
     return neighbours
 
 
-def reconstruct_path(start: Node):
+def reconstruct_path(start: Node) -> List[tuple]:
     """
-        Take a set of nodes and go backwards adding all the parents to a visited list,
+    Take a set of nodes and go backwards adding all the parents to a visited list,
     until start is reached, then return the reverse of this list.
 
     Args:
-        start (Node): The start node to reconstruct the path from, this will be the finish gate
-        goal (Node): The final node, one with no parent, this will be the start gate
-        visited (set[Node]): The set of visited nodes.
+        start (Node): The start node to reconstruct the path from, this will be the finish node
     """
     path = []
     curr = start
