@@ -27,8 +27,7 @@ def main():
     arr = convert_to_array(args.filename)
 
     # Needed for changing the recursion limit for large mazes, this can be set to base * height!
-    # sys.setrecursionlimit(len(arr[0]) * len(arr))
-    sys.setrecursionlimit(10000)
+    sys.setrecursionlimit(len(arr[0]) * len(arr))
 
     gates = find_gates(arr)
     start_gate, finish_gate = gates[0], gates[1]
