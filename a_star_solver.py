@@ -30,7 +30,7 @@ def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List
 
     for move in moves:
         # if possible move is already in visited don't add it to valid neighbours.
-        if Node(pos=(node.pos[0] + move[0], node.pos[1] + move[1]), parent=node.parent) in visited:
+        if Node(pos=(node.pos[0] + move[0], node.pos[1] + move[1])) in visited:
             continue
         if arr[node.pos[0] + move[0]][node.pos[1] + move[1]] == "-":
             neighbours.append((node.pos[0] + move[0], node.pos[1] + move[1]))
@@ -62,20 +62,26 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
 
     yet_to_visit = PriorityQueue()
     yet_to_visit.put((manhattan_distance(start, goal), Node(pos=start)))
+    path_length = 0
 
     while not yet_to_visit.empty():
         # get valid neighbours of best item in the priority queue
         curr = yet_to_visit.get()
         visited.add(curr[1])
 
+        # increase the value of path path_length
+        path_length = curr[0] - manhattan_distance(curr[1].pos, goal)
+
         if curr[1].pos == goal:
             return reconstruct_path(curr[1])
 
         neighbours = get_neighbours(arr, curr[1], visited)
+
+        path_length += 1
 
         # if there are no valid neighbours, then get the next value from yet_to_visit
         if len(neighbours) == 0:
             continue
 
         for neighbour in neighbours:
-            yet_to_visit.put((manhattan_distance(neighbour, goal), Node(pos=neighbour, parent=curr[1])))
+            yet_to_visit.put((manhattan_distance(neighbour, goal) + path_length, Node(pos=neighbour, parent=curr[1])))
