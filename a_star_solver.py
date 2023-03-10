@@ -63,17 +63,19 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
     yet_to_visit = PriorityQueue()
     yet_to_visit.put((manhattan_distance(start, goal), Node(pos=start)))
     path_length = 0
+    nodes_visited = 0
 
     while not yet_to_visit.empty():
         # get valid neighbours of best item in the priority queue
         curr = yet_to_visit.get()
         visited.add(curr[1])
+        nodes_visited += 1
         
         # get the path_length for the current node
         path_length = curr[0] - manhattan_distance(curr[1].pos, goal)
 
         if curr[1].pos == goal:
-            return reconstruct_path(curr[1])
+            return (reconstruct_path(curr[1]), nodes_visited)
 
         neighbours = get_neighbours(arr, curr[1], visited)
         

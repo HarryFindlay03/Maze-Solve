@@ -48,9 +48,10 @@ def main():
     elif args.algorithm == "a-star":
         path = a_star(arr, start_gate, finish_gate)
 
-        if path is not None:
+        if path[0] is not None:
             print("PATH FOUND🕺✨✨!")
-            print("PATH LENGTH: ", len(path))
+            print("NODES VISITED: ", path[1])
+            print("PATH LENGTH: ", len(path[0]))
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
