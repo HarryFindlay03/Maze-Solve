@@ -41,7 +41,7 @@ def main():
         ordered_path = find_ordered_path(start_gate, finish_gate, path)
         if ordered_path is not None:
             print("PATH FOUND🕺✨✨!")
-            print("NODES VISITED: ", nodes_explored)
+            print("NODES EXPLORED: ", nodes_explored)
             print("PATH LENGTH: ", len(ordered_path))
             
             # Print coloured route through maze on --output flag.
@@ -55,12 +55,12 @@ def main():
             print("ERROR💤PATH NOT FOUND💤")
 
     elif args.algorithm == "a-star":
-        path = a_star(arr, start_gate, finish_gate)
+        path, nodes_explored = a_star(arr, start_gate, finish_gate)
 
-        if path[0] is not None:
+        if path is not None:
             print("PATH FOUND🕺✨✨!")
-            print("NODES VISITED: ", path[1])
-            print("PATH LENGTH: ", len(path[0]))
+            print("NODES EXPLORED: ", nodes_explored)
+            print("PATH LENGTH: ", len(path))
 
             if args.output:
                 print("\n\n=============")
