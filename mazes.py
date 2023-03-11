@@ -30,12 +30,21 @@ def main():
     sys.setrecursionlimit(len(arr[0]) * len(arr))
 
     gates = find_gates(arr)
+
+    # if there are no valid start or end gates, break.
+    if len(gates) < 2:
+        print("NO VALID START OR END GATES FOUND🤔")
+        print("MAZE SOLVING NOT POSSIBLE 😡😡")
+        return
+    
     start_gate, finish_gate = gates[0], gates[1]
 
     print(f"Start: {start_gate} . End: {finish_gate}")
 
     if args.algorithm == "dfs":
+        start_time = time.time()
         path, nodes_explored = dfs(arr, start_gate, finish_gate, nodes_explored=0)
+        exec_time = time.time() - start_time
 
         # Path through the maze.
         ordered_path = find_ordered_path(start_gate, finish_gate, path)
@@ -43,6 +52,7 @@ def main():
             print("PATH FOUND🕺✨✨!")
             print("NODES EXPLORED: ", nodes_explored)
             print("PATH LENGTH: ", len(ordered_path))
+            print("TIME TAKEN: %s SECONDS" % exec_time)
             
             # Print coloured route through maze on --output flag.
             if args.output:
@@ -55,12 +65,15 @@ def main():
             print("ERROR💤PATH NOT FOUND💤")
 
     elif args.algorithm == "a-star":
+        start_time = time.time()
         path, nodes_explored = a_star(arr, start_gate, finish_gate)
+        exec_time = time.time() - start_time
 
         if path is not None:
             print("PATH FOUND🕺✨✨!")
             print("NODES EXPLORED: ", nodes_explored)
             print("PATH LENGTH: ", len(path))
+            print("TIME TAKEN: %s SECONDS" % exec_time)
 
             if args.output:
                 print("\n\n=============")
@@ -76,7 +89,5 @@ def main():
 
 
 if __name__ == "__main__":
-    # Timing
-    start_time = time.time()
+    # Running main function
     main()
-    print("EXEC TIME: %s SECONDS" % (time.time() - start_time))
