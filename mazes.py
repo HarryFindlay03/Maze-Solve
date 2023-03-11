@@ -15,10 +15,10 @@ def main():
     print("MAZE SOLVER")
     print("----------------")
 
-    # TODO: ERROR CHECKING ON COMMAND LINE ARGUMENTS
     parser = argparse.ArgumentParser()
     parser.add_argument("filename", help="filename for maze file")
     parser.add_argument("algorithm", help="algorithm to run [dfs/a-star]")
+    parser.add_argument("--output", action=argparse.BooleanOptionalAction)
 
     args = parser.parse_args()
 
@@ -42,6 +42,10 @@ def main():
         if ordered_path is not None:
             print("PATH FOUND🕺✨✨!")
             print("PATH LENGTH: ", len(ordered_path))
+            
+            # Print coloured route through maze on --output flag.
+            if args.output:
+                print_colors(arr, ordered_path)
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
@@ -52,6 +56,9 @@ def main():
             print("PATH FOUND🕺✨✨!")
             print("NODES VISITED: ", path[1])
             print("PATH LENGTH: ", len(path[0]))
+
+            if args.output:
+                print_colors(arr, path[0])
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
