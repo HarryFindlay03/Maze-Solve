@@ -18,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("filename", help="filename for maze file")
     parser.add_argument("algorithm", help="algorithm to run [dfs/a-star]")
-    parser.add_argument("--output", action=argparse.BooleanOptionalAction)
+    parser.add_argument("--output", action=argparse.BooleanOptionalAction, help="pretty maze output")
 
     args = parser.parse_args()
 
@@ -35,17 +35,22 @@ def main():
     print(f"Start: {start_gate} . End: {finish_gate}")
 
     if args.algorithm == "dfs":
-        path = dfs(arr, start_gate, finish_gate)
+        path, nodes_explored = dfs(arr, start_gate, finish_gate, nodes_explored=0)
 
         # Path through the maze.
         ordered_path = find_ordered_path(start_gate, finish_gate, path)
         if ordered_path is not None:
             print("PATH FOUND🕺✨✨!")
+            print("NODES VISITED: ", nodes_explored)
             print("PATH LENGTH: ", len(ordered_path))
             
             # Print coloured route through maze on --output flag.
             if args.output:
+                print("\n\n=============")
+                print("PRETTY OUTPUT")
+                print("=============\n\n")
                 print_colors(arr, ordered_path)
+                print("\n\n")
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
@@ -58,7 +63,11 @@ def main():
             print("PATH LENGTH: ", len(path[0]))
 
             if args.output:
-                print_colors(arr, path[0])
+                print("\n\n=============")
+                print("PRETTY OUTPUT")
+                print("=============\n\n")
+                print_colors(arr, path)
+                print("\n\n")
         else:
             print("ERROR💤PATH NOT FOUND💤")
 
