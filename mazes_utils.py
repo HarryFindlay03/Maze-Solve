@@ -74,7 +74,7 @@ def find_gates(arr: List[List[str]]) -> List[tuple]:
 
 def print_colors(arr: List[List[str]], visited: List[tuple]):
     """
-    Method that prints a path through the maze in a colour of your choosing.
+    Method that prints a path through the maze in green.
     """
     for i in range(len(arr)):
         for j in range(len(arr[0]) - 1):
@@ -87,7 +87,7 @@ def print_colors(arr: List[List[str]], visited: List[tuple]):
 
 def find_ordered_path(start: tuple, goal: tuple, path: set(), visited=[]):
     """
-    Takes a path and finds the route through the maze from start to end.
+    Takes a path (set) returned from a dfs and finds the route through the maze from start to end.
     """
     moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
