@@ -46,9 +46,10 @@ def main():
         path, nodes_explored = dfs(arr, start_gate, finish_gate, nodes_explored=0)
         exec_time = time.time() - start_time
 
-        # Path through the maze.
-        ordered_path = find_ordered_path(start_gate, finish_gate, path)
-        if ordered_path is not None:
+        
+        if path is not None:
+            # Ordered path through the maze.
+            ordered_path = find_ordered_path(start_gate, finish_gate, path)
             print("PATH FOUND🕺✨✨!")
             print("NODES EXPLORED: ", nodes_explored)
             print("PATH LENGTH: ", len(ordered_path))
