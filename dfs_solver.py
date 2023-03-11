@@ -32,4 +32,4 @@ def dfs(arr: List[List[str]], start: tuple, goal: tuple, nodes_explored=0, visit
                 visited.remove(neighbour)
 
     # None of the neighbours returned a valid path, so popped off all the neighbours, and try again at parent.
-    return (False, nodes_explored)
+    return (None, nodes_explored)
