@@ -50,6 +50,11 @@ To run the program (in an activated virtual environment):
 python mazes.py <filename> <algorithm>
 ```
 
+Optional flags:
+```shell
+--output # This outputs the maze with a green path showing the route through the maze.
+```
+
 Where `filename` is the location of the maze file you are using, I have included the maze files in the `ecm2423_ca` folder so you can just type the name of the file.
 
 `algorithm` is either `dfs` or `a-star` to run a depth-first search of a-star search on the inputted maze.
@@ -61,3 +66,7 @@ An example given here runs the a-star search algorithm on the large maze:
 python mazes.py maze-Large.txt a-star
 ```
 
+Another example runs depth-first search on the small maze and outputs the path:
+```shell
+python mazes.py maze-Small.txt dfs --output
+```
