@@ -89,5 +89,5 @@ def a_star(arr: List[List[str]], start: tuple, goal: tuple):
         for neighbour in neighbours:
             yet_to_visit.put((manhattan_distance(neighbour, goal) + path_length, Node(pos=neighbour, parent=curr_node)))
 
-    # No path found
+    # No path found in maze
     return (None, nodes_visited)
