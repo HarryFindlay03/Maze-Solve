@@ -34,9 +34,13 @@ def main():
     gates = find_gates(arr)
 
     # if there are no valid start or end gates, break.
-    if len(gates) < 2:
-        print("NO VALID START OR END GATES FOUND🤔")
-        print("MAZE SOLVING NOT POSSIBLE 😡😡")
+    if len(gates) != 2:
+        if len(gates) > 2:
+            print("MULTIPLE START OR END GATES FOUND, DISTINCT START AND END GATES ARE REQUIRED")
+        else:
+            print("NO VALID START OR END GATES FOUND🤔")
+
+        print("\nMAZE SOLVING NOT POSSIBLE 😡😡")
         return
     
     start_gate, finish_gate = gates[0], gates[1]
