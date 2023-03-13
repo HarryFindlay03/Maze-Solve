@@ -12,13 +12,16 @@ def main():
     """
     main method in dfs_solver.py that runs the code
     """
+    print("===========")
     print("MAZE SOLVER")
-    print("----------------")
+    print("===========")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("filename", help="filename for maze file")
     parser.add_argument("algorithm", help="algorithm to run [dfs/a-star]")
-    parser.add_argument("--output", action=argparse.BooleanOptionalAction, help="pretty maze output")
+    parser.add_argument("--path", action=argparse.BooleanOptionalAction, help="output path from start to goal")
+    parser.add_argument("--stats", action=argparse.BooleanOptionalAction, help="output statistics about the maze")
+    parser.add_argument("--prettyoutput", action=argparse.BooleanOptionalAction, help="pretty maze output")
 
     args = parser.parse_args()
 
@@ -39,8 +42,9 @@ def main():
     
     start_gate, finish_gate = gates[0], gates[1]
 
-    print(f"Start: {start_gate} . End: {finish_gate}")
+    print(f"Start: {start_gate}\nEnd: {finish_gate}")
 
+    # DFS
     if args.algorithm == "dfs":
         start_time = time.time()
         path, nodes_explored = dfs(arr, start_gate, finish_gate, nodes_explored=0)
@@ -50,45 +54,67 @@ def main():
         if path is not None:
             # Ordered path through the maze.
             ordered_path = find_ordered_path(start_gate, finish_gate, path)
-            print("PATH FOUND🕺✨✨!")
-            print("NODES EXPLORED: ", nodes_explored)
-            print("PATH LENGTH: ", len(ordered_path))
-            print("TIME TAKEN: %s SECONDS" % exec_time)
+            print("STATUS: PATH FOUND🕺✨✨!")
+
+            if args.stats:
+                print("\n\n==========")
+                print("STATISITCS")
+                print("==========\n\n")
+                print("NODES EXPLORED: ", nodes_explored)
+                print("PATH LENGTH: ", len(ordered_path))
+                print("TIME TAKEN: %s SECONDS" % exec_time)
             
+            if args.path:
+                print("\n\n=====")
+                print("PATH")
+                print("=====\n\n")
+                print(ordered_path)
+
             # Print coloured route through maze on --output flag.
-            if args.output:
+            if args.prettyoutput:
                 print("\n\n=============")
                 print("PRETTY OUTPUT")
                 print("=============\n\n")
                 print_colors(arr, ordered_path)
                 print("\n\n")
         else:
-            print("ERROR💤PATH NOT FOUND💤")
+            print("STATUS: 💤PATH NOT FOUND💤")
 
+    # A*
     elif args.algorithm == "a-star":
         start_time = time.time()
         path, nodes_explored = a_star(arr, start_gate, finish_gate)
         exec_time = time.time() - start_time
 
         if path is not None:
-            print("PATH FOUND🕺✨✨!")
-            print("NODES EXPLORED: ", nodes_explored)
-            print("PATH LENGTH: ", len(path))
-            print("TIME TAKEN: %s SECONDS" % exec_time)
+            print("STATUS: PATH FOUND🕺✨✨!")
 
-            if args.output:
+            if args.stats:
+                print("\n\n==========")
+                print("STATISITCS")
+                print("==========\n\n")
+                print("NODES EXPLORED: ", nodes_explored)
+                print("PATH LENGTH: ", len(path))
+                print("TIME TAKEN: %s SECONDS" % exec_time)
+
+            if args.path:
+                print("\n\n=====")
+                print("PATH")
+                print("=====\n\n")
+                print(path)
+
+            if args.prettyoutput:
                 print("\n\n=============")
                 print("PRETTY OUTPUT")
                 print("=============\n\n")
                 print_colors(arr, path)
                 print("\n\n")
         else:
-            print("ERROR💤PATH NOT FOUND💤")
+            print("STATUS: 💤PATH NOT FOUND💤")
 
     else:
         print("CHOSEN ALGORITHM IS NOT CORRECT !")
 
 
 if __name__ == "__main__":
-    # Running main function
     main()
