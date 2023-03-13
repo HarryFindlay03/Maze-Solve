@@ -1,6 +1,6 @@
 from queue import PriorityQueue
 from typing import List
-
+from math import sqrt
 
 class Node:
     def __init__(self, pos: tuple, parent=None) -> None:
@@ -23,6 +23,11 @@ def manhattan_distance(start: tuple, goal: tuple) -> int:
     """
     return abs(start[0] - goal[0]) + abs(start[1] - goal[1])
 
+def euclidean(start: tuple, goal: tuple) -> int:
+    """
+    Straight line distance between two points calculated by d(p, q) = sqrt((q1 - p1)**2 + (q2 - p2)**2)
+    """
+    return sqrt((goal[0]-start[0]**2) + (goal[1]-start[1])**2)
 
 def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List[tuple]:
     moves = [(0, -1), (0, 1), (-1, 0), (1, 0)]
