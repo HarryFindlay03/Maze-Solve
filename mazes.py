@@ -3,9 +3,8 @@ import sys
 import time
 
 from a_star_solver import a_star
-from dfs_solver import dfs
-from mazes_utils import (convert_to_array, find_gates, find_ordered_path,
-                         print_2d_array, print_colors)
+from dfs_solver import dfs, find_ordered_path
+from mazes_utils import convert_to_array, find_gates, print_2d_array, print_colors
 
 
 def main():

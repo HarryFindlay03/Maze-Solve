@@ -83,25 +83,3 @@ def print_colors(arr: List[List[str]], visited: List[tuple]):
             else:
                 print(arr[i][j], end="")
         print(arr[i][len(arr[i]) - 1])
-
-
-def find_ordered_path(start: tuple, goal: tuple, path: set(), visited=[]):
-    """
-    Takes a path (set) returned from a dfs and finds the route through the maze from start to end.
-    """
-    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-
-    visited.append(start)
-
-    if start == goal:
-        return True
-
-    neighbours = []
-    for move in moves:
-        neighbours.append((start[0] + move[0], start[1] + move[1]))
-
-    for neighbour in neighbours:
-        if neighbour not in visited:
-            if neighbour in path:
-                if find_ordered_path(neighbour, goal, path, visited):
-                    return visited
