@@ -8,7 +8,7 @@ def find_ordered_path(start: tuple, goal: tuple, path: set(), visited=[]):
     """
     Takes a path (set) returned from a dfs and finds the route through the maze from start to end.
     """
-    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    moves = [(-1, 0), (0, -1), (0, 1), (1, 0)]
 
     visited.append(start)
 
