@@ -52,7 +52,9 @@ python mazes.py <filename> <algorithm>
 
 Optional flags:
 ```shell
---output # This outputs the maze with a green path showing the route through the maze.
+--stats # outputs stats about the maze search, including number of nodes explores, path length, and time taken.
+--path # outputs the path as a list of coordinates where coordinataes are (y, x) with origin being in the top left of the maze.
+--prettyoutput # This outputs the maze with a green path showing the route through the maze.
 ```
 
 Where `filename` is the location of the maze file you are using, I have included the maze files in the `ecm2423_ca` folder so you can just type the name of the file.
@@ -66,7 +68,12 @@ An example given here runs the a-star search algorithm on the large maze:
 python mazes.py maze-Large.txt a-star
 ```
 
-Another example runs depth-first search on the small maze and outputs the path:
+Another example runs depth-first search on the medium maze and outputs the path:
 ```shell
-python mazes.py maze-Small.txt dfs --output
+python mazes.py maze-Medium.txt dfs --output
+```
+
+Another example runs a-star search on the small maze and outputs the stats, path, and pretty output.
+```shell
+python mazes.py maze-Small.txt a-star --stats --path --prettyoutput
 ```
