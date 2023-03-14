@@ -70,7 +70,7 @@ python mazes.py maze-Large.txt a-star
 
 Another example runs depth-first search on the medium maze and outputs the path:
 ```shell
-python mazes.py maze-Medium.txt dfs --output
+python mazes.py maze-Medium.txt dfs --path
 ```
 
 Another example runs a-star search on the small maze and outputs the stats, path, and pretty output.
