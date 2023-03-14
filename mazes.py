@@ -75,7 +75,6 @@ def main():
                 print("=====\n\n")
                 print(path)
 
-            # Print coloured route through maze on --output flag.
             if args.prettyoutput:
                 print("\n\n=============")
                 print("PRETTY OUTPUT")
