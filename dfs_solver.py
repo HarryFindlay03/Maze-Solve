@@ -4,33 +4,12 @@ Python file for depth first search on supplied mazes for ECM2423 coursework.
 from typing import List
 
 
-def find_ordered_path(start: tuple, goal: tuple, path: set(), visited=[]):
-    """
-    Takes a path (set) returned from a dfs and finds the route through the maze from start to end.
-    """
-    moves = [(-1, 0), (0, -1), (0, 1), (1, 0)]
-
-    visited.append(start)
-
-    if start == goal:
-        return True
-
-    neighbours = []
-    for move in moves:
-        neighbours.append((start[0] + move[0], start[1] + move[1]))
-
-    for neighbour in neighbours:
-        if neighbour not in visited:
-            if neighbour in path:
-                if find_ordered_path(neighbour, goal, path, visited):
-                    return visited
-
-
-def dfs(arr: List[List[str]], start: tuple, goal: tuple, nodes_explored=0, visited=set()):
+def dfs(arr: List[List[str]], start: tuple, goal: tuple, nodes_explored=0, visited=set(), path=[]):
     # possible moves
     moves = [(1, 0), (0, 1), (0, -1), (-1, 0)]
 
     visited.add(start)
+    path.append(start)
     nodes_explored += 1
 
     # base case
@@ -47,10 +26,11 @@ def dfs(arr: List[List[str]], start: tuple, goal: tuple, nodes_explored=0, visit
 
     for neighbour in neighbours:
         if neighbour not in visited:
-            found, nodes_explored = dfs(arr, neighbour, goal, nodes_explored, visited)
+            found, nodes_explored = dfs(arr, neighbour, goal, nodes_explored, visited, path)
             if found:
-                return (visited, nodes_explored)
+                return (path, nodes_explored)
             else:
+                path.pop()
                 visited.remove(neighbour)
 
     # No path found through the maze

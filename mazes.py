@@ -55,8 +55,6 @@ def main():
 
         
         if path is not None:
-            # Ordered path through the maze.
-            ordered_path = find_ordered_path(start_gate, finish_gate, path)
             print("STATUS: PATH FOUND🕺✨✨!")
 
             if args.stats:
@@ -64,21 +62,21 @@ def main():
                 print("STATISITCS")
                 print("==========\n\n")
                 print("NODES EXPLORED: ", nodes_explored)
-                print("PATH LENGTH: ", len(ordered_path))
+                print("PATH LENGTH: ", len(path))
                 print("TIME TAKEN: %s SECONDS" % exec_time)
             
             if args.path:
                 print("\n\n=====")
                 print("PATH")
                 print("=====\n\n")
-                print(ordered_path)
+                print(path)
 
             # Print coloured route through maze on --output flag.
             if args.prettyoutput:
                 print("\n\n=============")
                 print("PRETTY OUTPUT")
                 print("=============\n\n")
-                print_colors(arr, ordered_path)
+                print_colors(arr, path)
                 print("\n\n")
         else:
             print("STATUS: 💤PATH NOT FOUND💤")
