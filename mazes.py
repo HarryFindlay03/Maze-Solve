@@ -1,15 +1,19 @@
+"""
+Main python file to run the depth-first search and A* search algorithms
+"""
+
 import argparse
 import sys
 import time
 
 from a_star_solver import a_star
-from dfs_solver import dfs, find_ordered_path
+from dfs_solver import dfs
 from mazes_utils import convert_to_array, find_gates, print_2d_array, print_colors
 
 
 def main():
     """
-    main method in dfs_solver.py that runs the code
+    Main method that takes command line arguments and runs the specified algorithm on specified maze.
     """
     print("===========")
     print("MAZE SOLVER")
