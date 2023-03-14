@@ -36,6 +36,17 @@ def euclidean(start: tuple, goal: tuple) -> int:
 
 
 def get_neighbours(arr: List[List[str]], node: Node, visited: set[Node]) -> List[tuple]:
+    """
+    Gets all valid neighbours from a node in the maze.
+
+    Args:
+        arr (List[List[str]]): 2D array which search is being performed on
+        node (Node): node to find neighbours for
+        visited (set[Node]): a set of nodes that have been visited
+
+    Returns:
+        List[tuple]: A list of valid neighbours
+    """
     moves = [(0, -1), (0, 1), (-1, 0), (1, 0)]
     neighbours = []
 
